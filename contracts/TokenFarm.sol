@@ -204,9 +204,9 @@ contract TokenFarm {
         // Calcular la cantidad de bloques transcurridos desde el último checkpoint. 
         uint256 blocksPassed = block.number - lastCheckpoint;
         // Calcular la proporción del staking del usuario en relación al total staking (stakingBalance[beneficiary] / totalStakingBalance).
-        uint256 shareCalc = user[beneficiary].stakingBalance / totalStakingBalance;
+        uint256 shareCalc = (user[beneficiary].stakingBalance * 1e18) / totalStakingBalance;
         // Calcular las recompensas del usuario multiplicando la proporción por REWARD_PER_BLOCK y los bloques transcurridos.
-        uint256 rewardCalc = REWARD_PER_BLOCK * blocksPassed * shareCalc;
+        uint256 rewardCalc = (REWARD_PER_BLOCK * blocksPassed * shareCalc) / 1e18;
         // Actualizar las recompensas pendientes del usuario en pendingRewards.
         user[beneficiary].pendingRewards = rewardCalc;
         // Actualizar el checkpoint del usuario al bloque actual.
